@@ -16,12 +16,13 @@ const fetchFlightsFailure = (ex) => ({
 });
 
 
-export const fetchFlights = (args) => (dispatch, getState) => {
+export const fetchFlights = ({lat, long}) => (dispatch, getState) => {
   if(getState().flights.isFetching)
     return false;
 
   dispatch(fetchFlightsRequest());
 
+  // lat and long should be used here
   return fetch(SITE_URL)
     .then(res => res.json())
     .then(json => {

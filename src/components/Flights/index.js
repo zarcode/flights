@@ -2,25 +2,13 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
+import "./Flights.css";
 import FlightItem from "./FlightItem"
 import { fetchFlights } from "../../actions/flights"
 
 class Flights extends Component {
   constructor(props) {
     super(props);
-
-    this.timer = null;
-  }
-
-  componentDidMount() {
-    // this.timer = setInterval(() => {
-    //
-    // }, 1000);
-    this.props.fetchFlightsAction();
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timer);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -30,6 +18,14 @@ class Flights extends Component {
   }
 
   render() {
+    if(this.props.flights.list.length === 0 || this.props.flights.isFetching) {
+      return (
+        <div className="spinnerHolder">
+          <div className="lds-dual-ring"/>
+        </div>
+      )
+    }
+
     return (
       <div>
         {this.props.flights.list.map((flight) => (
@@ -37,6 +33,7 @@ class Flights extends Component {
         ))}
       </div>
     )
+
   }
 }
 
