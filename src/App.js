@@ -15,7 +15,7 @@ const App = () => (
       <Router>
           <div className="layout">
             <Route exact path="/" component={Flights} />
-            <Route path="/flight" component={Flight} />
+            <Route path="/flight/:Id" component={Flight} />
           </div>
       </Router>
     </Provider>

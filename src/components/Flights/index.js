@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
+import FlightItem from "./FlightItem"
 import { fetchFlights } from "../../actions/flights"
 
 class Flights extends Component {
@@ -33,11 +33,7 @@ class Flights extends Component {
     return (
       <div>
         {this.props.flights.list.map((flight) => (
-          <Link
-            key={flight.Id}
-            to="/flight">
-              Item
-          </Link>
+          <FlightItem key={flight.Id} flight={flight}/>
         ))}
       </div>
     )

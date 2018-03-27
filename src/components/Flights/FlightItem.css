@@ -1,0 +1,27 @@
+.flight-item {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #efefef;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+
+.flight-item p {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.flight-item.west img {
+    float: left;
+    margin-right: 10px;
+}
+
+.flight-item.east img {
+    float: right;
+    margin-left: 10px;
+}
+
+.flight-item .description {
+}

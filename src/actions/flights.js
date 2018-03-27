@@ -17,6 +17,8 @@ const fetchFlightsFailure = (ex) => ({
 
 
 export const fetchFlights = (args) => (dispatch, getState) => {
+  if(getState().flights.isFetching)
+    return false;
 
   dispatch(fetchFlightsRequest());
 
@@ -24,7 +26,17 @@ export const fetchFlights = (args) => (dispatch, getState) => {
     .then(res => res.json())
     .then(json => {
       if("acList" in json) {
-        dispatch(fetchFlightsSuccess(json.acList))
+        const sortedFlights = json.acList.sort((a, b) => {
+          if (a.Alt > b.Alt) {
+            return -1;
+          }
+          if (a.Alt < b.Alt) {
+            return 1;
+          }
+          // a must be equal to b
+          return 0;
+        });
+        dispatch(fetchFlightsSuccess(sortedFlights))
       } else {
         dispatch(fetchFlightsFailure("Wrong data was fetched"))
       }
