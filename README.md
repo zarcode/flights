@@ -1,6 +1,15 @@
 ## How to run:
 
-Download or clone master branch. In the project directory run:
+Download or clone master branch.
+Inside of `/src/config.json` put your https://clearbit.com/ secret key, like this:
+
+```
+{
+  "clearbitkey": "ADD_YOUR_SECRET_KEY_HERE"
+}
+```
+
+In the project directory run:
 
 ```
 npm install
