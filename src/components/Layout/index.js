@@ -4,32 +4,23 @@ import { bindActionCreators } from "redux";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 // import "./Layout.css";
-import { fetchFlights } from "../../actions/flights";
+import { setCoordinates, setCoordinatesFail } from "../../actions/position";
 import Flights from "../Flights";
 import Flight from "../Flight";
 
 class Layout extends Component {
   constructor(props) {
     super(props);
-
-    this.timer = null;
   }
 
   componentDidMount() {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
-        this.props.fetchLayoutAction(position.coords.latitude, position.coords.longitude);
-        this.timer = setInterval(() => {
-          this.props.fetchLayoutAction(position.coords.latitude, position.coords.longitude);
-        }, 1000*60);
+          this.props.setCoordinatesAction(position.coords.latitude, position.coords.longitude);
       });
     } else {
-      /* geolocation IS NOT available */
+      this.props.setCoordinatesFailAction();
     }
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timer);
   }
 
   render() {
@@ -50,7 +41,8 @@ Layout.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchLayoutAction: bindActionCreators(fetchFlights, dispatch)
+  setCoordinatesAction: bindActionCreators(setCoordinates, dispatch),
+  setCoordinatesFailAction: bindActionCreators(setCoordinatesFail, dispatch)
 });
 
 export default connect(null, mapDispatchToProps)(Layout);

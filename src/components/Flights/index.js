@@ -9,15 +9,61 @@ import { fetchFlights } from "../../actions/flights"
 class Flights extends Component {
   constructor(props) {
     super(props);
+
+    this.timer = null;
+
+    this.runFetch = this.runFetch.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.flights.errorMessage) {
-      alert(`We were unable to provide new data, this error happened: "${nextProps.flights.errorMessage}"`);
+  runFetch(latitude, longitude) {
+    this.props.fetchFlightsAction(latitude, longitude );
+    clearInterval(this.timer);
+    this.timer = setInterval(() => {
+      this.props.fetchFlightsAction(latitude, longitude );
+    }, 1000*60);
+  }
+
+  componentDidMount() {
+    if(
+      this.props.position.latitude
+      && this.props.position.latitude !== -1
+      && this.props.position.longitude
+      && this.props.position.longitude !== -1
+    ) {
+      this.runFetch(this.props.position.latitude, this.props.position.longitude);
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+
+    if(nextProps.flights.errorMessage) {
+      alert(`We were unable to provide new data, this error happened: "${nextProps.flights.errorMessage}"`);
+    }
+
+    if(
+      nextProps.position.latitude !== this.props.position.latitude
+      && nextProps.position.latitude > -1
+      && nextProps.position.longitude !== this.props.position.longitude
+      && nextProps.position.longitude > -1
+    ) {
+        this.runFetch(nextProps.position.latitude, nextProps.position.longitude);
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
   render() {
+    if(this.props.position.latitude === -1
+      && this.props.position.longitude === -1) {
+      return (
+        <div className="spinnerHolder">
+          <p>You have to enable geolocation in your browser in order app to work.</p>
+        </div>
+      )
+    }
+
     if(this.props.flights.list.length === 0 || this.props.flights.isFetching) {
       return (
         <div className="spinnerHolder">
@@ -42,6 +88,7 @@ Flights.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
+  position: state.position,
   flights: state.flights
 });
 
