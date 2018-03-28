@@ -11,16 +11,41 @@ import Flight from "../Flight";
 class Layout extends Component {
   constructor(props) {
     super(props);
+
+    this.positionSuccess = this.positionSuccess.bind(this);
+    this.positionError = this.positionError.bind(this);
   }
 
   componentDidMount() {
     if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-          this.props.setCoordinatesAction(position.coords.latitude, position.coords.longitude);
-      });
+      navigator.geolocation.getCurrentPosition(this.positionSuccess, this.positionError);
     } else {
-      this.props.setCoordinatesFailAction();
+      this.props.setCoordinatesFailAction("Geolocation is not supported by this browser.");
     }
+  }
+
+  positionSuccess(position) {
+    this.props.setCoordinatesAction(position.coords.latitude, position.coords.longitude);
+  }
+
+  positionError(error) {
+    let message = "An unknown error occurred.";
+    switch(error.code) {
+      case error.PERMISSION_DENIED:
+        message = "User denied the request for Geolocation.";
+        break;
+      case error.POSITION_UNAVAILABLE:
+        message = "Location information is unavailable.";
+        break;
+      case error.TIMEOUT:
+        message = "The request to get user location timed out.";
+        break;
+      case error.UNKNOWN_ERROR:
+        message = "An unknown error occurred.";
+        break;
+    }
+
+    this.props.setCoordinatesFailAction(message);
   }
 
   render() {

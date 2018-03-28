@@ -4,6 +4,7 @@ export const setCoordinates = (latitude, longitude) => ({
   longitude
 });
 
-export const setCoordinatesFail = () => ({
+export const setCoordinatesFail = (message) => ({
   type: "SET_COORDINATES_FAIL",
+  message
 });

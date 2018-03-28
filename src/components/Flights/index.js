@@ -25,10 +25,9 @@ class Flights extends Component {
 
   componentDidMount() {
     if(
+      this.props.positionFailMessage === null,
       this.props.position.latitude
-      && this.props.position.latitude !== -1
       && this.props.position.longitude
-      && this.props.position.longitude !== -1
     ) {
       this.runFetch(this.props.position.latitude, this.props.position.longitude);
     }
@@ -41,10 +40,9 @@ class Flights extends Component {
     }
 
     if(
+      nextProps.positionFailMessage === null,
       nextProps.position.latitude !== this.props.position.latitude
-      && nextProps.position.latitude > -1
       && nextProps.position.longitude !== this.props.position.longitude
-      && nextProps.position.longitude > -1
     ) {
         this.runFetch(nextProps.position.latitude, nextProps.position.longitude);
     }
@@ -55,11 +53,10 @@ class Flights extends Component {
   }
 
   render() {
-    if(this.props.position.latitude === -1
-      && this.props.position.longitude === -1) {
+    if(this.props.positionFailMessage) {
       return (
         <div className="spinnerHolder">
-          <p>You have to enable geolocation in your browser in order app to work.</p>
+          <p>{this.props.positionFailMessage}</p>
         </div>
       )
     }
@@ -88,7 +85,8 @@ Flights.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  position: state.position,
+  positionFailMessage: state.position.message,
+  position: state.position.coords,
   flights: state.flights
 });
 
