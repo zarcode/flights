@@ -16,10 +16,9 @@ class Flights extends Component {
   }
 
   runFetch(latitude, longitude) {
-    this.props.fetchFlightsAction(latitude, longitude );
-    clearInterval(this.timer);
+    this.props.fetchFlightsAction(latitude, longitude);
     this.timer = setInterval(() => {
-      this.props.fetchFlightsAction(latitude, longitude );
+      this.props.fetchFlightsAction(latitude, longitude);
     }, 1000*60);
   }
 
@@ -61,7 +60,7 @@ class Flights extends Component {
       )
     }
 
-    if(this.props.flights.list.length === 0 || this.props.flights.isFetching) {
+    if(this.props.flights.list.length === 0) {
       return (
         <div className="spinnerHolder">
           <div className="lds-dual-ring"/>
