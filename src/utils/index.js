@@ -1,5 +1,6 @@
+import config from "../config"
 const CLEARBIT_URL = "https://company.clearbit.com/v1/domains/find?name=";
-const CLEARBIT_KEY = "sk_67250f6b93d14a236628a0cfee7db117";
+const CLEARBIT_KEY = config.clearbitkey;
 
 export const fetchDomain = function(company) {
   return fetch(CLEARBIT_URL + `"${company}"`, {
