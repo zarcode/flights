@@ -9,7 +9,7 @@ const FlightItem = ({flight}) => {
     <Link
       to={`/flight/${flight.Id}`}>
       <div className={`flight-item${classes}`}>
-          <img src="http://via.placeholder.com/80x80" />
+          <img alt={"Call" in flight?flight.Call:"flight"} src="http://via.placeholder.com/80x80" />
           <div className="description">
             <p><strong>Flight code number:</strong>{` ${"Call" in flight?flight.Call:"/"}`}</p>
             <p><strong>Altitude:</strong>{` ${"Alt" in flight?flight.Alt:"/"}`}</p>

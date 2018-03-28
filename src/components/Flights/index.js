@@ -25,8 +25,8 @@ class Flights extends Component {
 
   componentDidMount() {
     if(
-      this.props.positionFailMessage === null,
-      this.props.position.latitude
+      this.props.positionFailMessage === null
+      && this.props.position.latitude
       && this.props.position.longitude
     ) {
       this.runFetch(this.props.position.latitude, this.props.position.longitude);
@@ -40,8 +40,8 @@ class Flights extends Component {
     }
 
     if(
-      nextProps.positionFailMessage === null,
-      nextProps.position.latitude !== this.props.position.latitude
+      nextProps.positionFailMessage === null
+      && nextProps.position.latitude !== this.props.position.latitude
       && nextProps.position.longitude !== this.props.position.longitude
     ) {
         this.runFetch(nextProps.position.latitude, nextProps.position.longitude);

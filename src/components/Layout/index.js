@@ -40,9 +40,8 @@ class Layout extends Component {
       case error.TIMEOUT:
         message = "The request to get user location timed out.";
         break;
-      case error.UNKNOWN_ERROR:
+      default:
         message = "An unknown error occurred.";
-        break;
     }
 
     this.props.setCoordinatesFailAction(message);
