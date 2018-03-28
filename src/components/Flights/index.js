@@ -17,20 +17,22 @@ class Flights extends Component {
 
   runFetch(latitude, longitude) {
     this.props.fetchFlightsAction(latitude, longitude);
+    clearInterval(this.timer);
     this.timer = setInterval(() => {
       this.props.fetchFlightsAction(latitude, longitude);
     }, 1000*60);
   }
 
-  componentDidMount() {
-    if(
-      this.props.positionFailMessage === null
-      && this.props.position.latitude
-      && this.props.position.longitude
-    ) {
-      this.runFetch(this.props.position.latitude, this.props.position.longitude);
-    }
-  }
+  // componentDidMount() {
+  //   if(
+  //     this.props.positionFailMessage === null
+  //     && this.props.flights.list.length === 0
+  //     && this.props.position.latitude
+  //     && this.props.position.longitude
+  //   ) {
+  //     this.runFetch(this.props.position.latitude, this.props.position.longitude);
+  //   }
+  // }
 
   componentWillReceiveProps(nextProps) {
 
