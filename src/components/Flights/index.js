@@ -60,7 +60,7 @@ class Flights extends Component {
       )
     }
 
-    if(this.props.flights.list.length === 0) {
+    if(this.props.flights.list.length === 0 || this.props.flights.isFetching) {
       return (
         <div className="spinnerHolder">
           <div className="lds-dual-ring"/>
