@@ -1,0 +1,35 @@
+.about-flight .img-wrapper {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 30px auto;
+}
+
+.lds-dual-ring-small {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.lds-dual-ring-small:after {
+    content: " ";
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin: 1px;
+    border-radius: 50%;
+    border: 3px solid #666;
+    border-color: #666 transparent #666 transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring-small {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

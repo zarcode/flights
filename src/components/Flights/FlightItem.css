@@ -6,6 +6,7 @@
     margin-bottom: 10px;
     box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.3);
     overflow: hidden;
+
 }
 
 .flight-item p {
@@ -13,15 +14,29 @@
     margin-bottom: 10px;
 }
 
-.flight-item.west img {
+.img-wrapper img {
+    width: 100%;
+    height: auto;
+}
+
+.flight-item img {
+    max-height: 80px;
+    max-width: 80px;
+}
+
+.flight-item .img-wrapper {
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.flight-item.west .img-wrapper {
     float: left;
     margin-right: 10px;
 }
 
-.flight-item.east img {
+.flight-item.east .img-wrapper {
     float: right;
     margin-left: 10px;
-}
-
-.flight-item .description {
 }

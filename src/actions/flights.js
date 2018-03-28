@@ -1,5 +1,6 @@
+import { fetchDomain } from "../utils"
 // const SITE_URL = "https://public-api.adsbexchange.com/VirtualRadar/AircraftList.json?lat=33.433638&lng=-112.008113&fDstL=0&fDstU=100"
-const SITE_URL = "http://localhost:3000/flights.json"
+const SITE_URL = "http://localhost:3000/flights.json";
 
 const fetchFlightsRequest = () => ({
   type: "FETCH_FLIGHTS_REQUEST"
@@ -14,7 +15,6 @@ const fetchFlightsFailure = (ex) => ({
   type: "FETCH_FLIGHTS_FAILURE",
   message: ex,
 });
-
 
 export const fetchFlights = ({lat, long}) => (dispatch, getState) => {
   if(getState().flights.isFetching)
@@ -37,7 +37,20 @@ export const fetchFlights = ({lat, long}) => (dispatch, getState) => {
           // a must be equal to b
           return 0;
         });
-        dispatch(fetchFlightsSuccess(sortedFlights))
+
+        const withIconsPromises = sortedFlights.map((flight) => {
+          return fetchDomain(flight.Man).then((logo) => {
+            return {
+              ...flight,
+              manIcon: logo
+            }
+          })
+        });
+
+        Promise.all(withIconsPromises).then((newArray) => {
+          dispatch(fetchFlightsSuccess(newArray))
+        });
+
       } else {
         dispatch(fetchFlightsFailure("Wrong data was fetched"))
       }
