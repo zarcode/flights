@@ -25,7 +25,7 @@ class Layout extends Component {
   }
 
   positionSuccess(position) {
-    this.props.setCoordinatesAction(position.coords.latitude, position.coords.longitude);
+    this.props.actions.setCoordinates(position.coords.latitude, position.coords.longitude);
   }
 
   positionError(error) {
@@ -44,7 +44,7 @@ class Layout extends Component {
         message = "An unknown error occurred.";
     }
 
-    this.props.setCoordinatesFailAction(message);
+    this.props.actions.setCoordinatesFail(message);
   }
 
   render() {
@@ -65,8 +65,7 @@ Layout.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  setCoordinatesAction: bindActionCreators(setCoordinates, dispatch),
-  setCoordinatesFailAction: bindActionCreators(setCoordinatesFail, dispatch)
+  actions: bindActionCreators({ setCoordinates, setCoordinatesFail }, dispatch)
 });
 
 export default connect(null, mapDispatchToProps)(Layout);
